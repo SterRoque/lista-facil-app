@@ -19,9 +19,10 @@
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
+    "jsx-quotes": ["error", "prefer-single"],
     "indent": [
       "error",
-      4
+      2
     ],
     "linebreak-style": [
       "error",
