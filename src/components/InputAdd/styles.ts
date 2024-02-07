@@ -19,7 +19,7 @@ export const styles =  StyleSheet.create({
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderRadius: 0,
-    marginLeft: -2,
+    marginLeft: -55,
     backgroundColor: theme.colors.primary,
   }
   
