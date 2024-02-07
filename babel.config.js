@@ -8,6 +8,8 @@ module.exports = function(api) {
       }
     },
     plugins: [
+      '@babel/transform-react-jsx-source',
+      'babel-plugin-transform-typescript-metadata',
       [
         'module-resolver',
         {

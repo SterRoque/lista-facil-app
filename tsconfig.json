@@ -3,6 +3,10 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": "./",
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "*": [
         "./src/*"
