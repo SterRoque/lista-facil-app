@@ -1,7 +1,8 @@
 import { View } from 'react-native'
-import ShopIcon from '../../assets/icons/shop.svg'
+import ShopIcon from 'assets/icons/shop.svg'
 import { Text } from 'react-native-paper'
 import { styles } from './styles'
+
 type NoItemsProps = {
   text: string
 }
