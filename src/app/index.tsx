@@ -4,8 +4,21 @@ import { styles } from '../styles/home.styles'
 import { InputAdd } from '../components/InputAdd'
 import { NoItems } from '../components/NoItems'
 import { Category } from 'components/Category'
+import { useEffect } from 'react'
+import { dataSource } from 'database'
 
 export default function Home() {
+
+  useEffect(() => {
+    const connectToDB = async () => {
+      if (!dataSource.isInitialized) {
+        await dataSource.initialize()
+      }
+    }
+
+    connectToDB()
+  }, [])
+
   return(
     <View style={styles.body}>
       <Logo />
