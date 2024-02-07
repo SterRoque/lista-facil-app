@@ -4,8 +4,34 @@ import { styles } from '../styles/home.styles'
 import { InputAdd } from '../components/InputAdd'
 import { NoItems } from '../components/NoItems'
 import { Category } from 'components/Category'
+import { useEffect, useState } from 'react'
+import { dataSource } from 'database'
+import { ActivityIndicator } from 'react-native-paper'
 
 export default function Home() {
+
+  const [isConnectingToDB, setIsConnectingToDB] = useState<boolean>(false)
+
+  useEffect(() => {
+    const connectToDB = async () => {
+      if (!dataSource.isInitialized) {
+        setIsConnectingToDB(true)
+        await dataSource.initialize()
+        setIsConnectingToDB(false)
+      }
+    }
+
+    connectToDB()
+  }, [])
+
+  if (isConnectingToDB) {
+    return (
+      <View style={styles.body}>
+        <ActivityIndicator />
+      </View>
+    )
+  }
+
   return(
     <View style={styles.body}>
       <Logo />
