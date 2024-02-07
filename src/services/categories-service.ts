@@ -1,12 +1,11 @@
 import { dataSource } from 'database'
 import { CategoryEntity } from 'database/entities'
-
-const categoryRepository = dataSource.getRepository(CategoryEntity)
+import { categoryRepository } from 'repositories'
 
 export async function createCategoryService(name: string): Promise<CategoryEntity> {
   const categoryExists = await categoryRepository.findOne({ where: { name } })
 
-  if (!categoryExists) {
+  if (categoryExists) {
     throw new Error('Category already exists!')
   }
 

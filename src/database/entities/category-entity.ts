@@ -12,6 +12,6 @@ export class CategoryEntity extends BaseEntity {
   @CreateDateColumn()
     created_at: Date
 
-  @OneToMany(() => Product, product => product.category)
-    products: Product[]
+  // @OneToMany(() => Product, product => product.category)
+  //   products: Product[]
 }
