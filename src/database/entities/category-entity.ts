@@ -1,9 +1,9 @@
-import { Entity, Column, OneToMany, BaseEntity, PrimaryColumn, CreateDateColumn } from 'typeorm'
+import { Entity, Column, OneToMany, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm'
 import { ProductEntity as Product } from './product-entity'
 
 @Entity('category')
 export class CategoryEntity extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
     id: number
 
   @Column('text')
