@@ -9,8 +9,9 @@ import { dataSource } from 'database'
 import { ActivityIndicator } from 'react-native-paper'
 import { createCategoryService, deleteCategoryByIdService, getCategoriesService, updateCategoryService } from 'services/categories-service'
 import { CategoryEntity } from 'database/entities'
-import { EditCategoryModal } from 'components/EditCategoryModal'
+import { EditCategoryDialog } from 'components/EditCategoryDialog'
 import { CategoryModel } from 'models/category-model'
+import { DeleteDialog } from 'components/DeleteDialog'
 
 export default function Home() {
 
@@ -18,7 +19,8 @@ export default function Home() {
   const [inputText, setInputText] = useState<string>('')
   const [categories, setCategories] = useState<CategoryEntity[]>([])
   const [category, setCategory] = useState<CategoryModel>({name: ''})
-  const [isOpenEditModal, setIsOpenEditModal] = useState<boolean>(false)
+  const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false)
+  const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
 
   async function fetchCategories() {
     const response = await getCategoriesService()
@@ -31,23 +33,37 @@ export default function Home() {
     console.log(categories)
     setInputText('')
   }
-  console.log(category)
-  function handleOpenEditModal(item: CategoryModel) {
+
+  function handleOpenEditDialog(item: CategoryModel) {
     setCategory(item)
-    setIsOpenEditModal(true)
+    setIsOpenEditDialog(true)
   }
 
-  function handleCloseEditModal() {
-    setIsOpenEditModal(false)
+  function handleCloseEditDialog() {
+    setIsOpenEditDialog(false)
   }
 
-  async function handleSubmitEditModal() {
+  function handleOpenDeleteDialog(item: CategoryModel) {
+    setCategory(item)
+    setIsOpenDeleteDialog(true)
+  }
+
+  function handleCloseDeleteDialog() {
+    setIsOpenDeleteDialog(false)
+  }
+
+  async function handleDeleteCategory() {
+    await deleteCategoryByIdService(category.id!)
+    await fetchCategories()
+    handleCloseDeleteDialog()
+  }
+
+  async function handleSubmitEditDialog() {
     await updateCategoryService(category.id!, category.name)
     await fetchCategories()
-    handleCloseEditModal()
+    handleCloseEditDialog()
   }
-
-
+  
 
   useEffect(() => {
     const connectToDB = async () => {
@@ -89,23 +105,28 @@ export default function Home() {
         renderItem={({item}) => (
           <Category 
             title={item.name} 
-            onEdit={() => handleOpenEditModal(item)}
-            onRemove={() => deleteCategoryByIdService(item.id)
-              .then(()=> fetchCategories())}
+            onEdit={() => handleOpenEditDialog(item)}
+            onRemove={() => handleOpenDeleteDialog(item)}
           />
         )}
         ListEmptyComponent={() => <NoItems text='Não há listas cadastradas'/>}
       
       />
-
-      <EditCategoryModal 
-        isOpen={isOpenEditModal} 
-        onClose={handleCloseEditModal} 
+      <DeleteDialog 
+        itemName={category.name} 
+        isOpen={isOpenDeleteDialog} 
+        onClose={handleCloseDeleteDialog}
+        onRemove={handleDeleteCategory}
+      />
+      <EditCategoryDialog
+        isOpen={isOpenEditDialog} 
+        onClose={handleCloseEditDialog} 
         value={category.name} 
         onChangeText={(text) => setCategory((prev)=> ({...prev, name: text}))}
-        onSubmit={handleSubmitEditModal}
+        onSubmit={handleSubmitEditDialog}
       />
     </View>
+
     
   )
 
