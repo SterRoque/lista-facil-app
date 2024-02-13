@@ -32,7 +32,7 @@ export default function Home() {
     await fetchCategories()
     console.log(categories)
     setInputText('')
-  }
+  } 
 
   function handleOpenEditDialog(item: CategoryModel) {
     setCategory(item)
@@ -107,6 +107,7 @@ export default function Home() {
             title={item.name} 
             onEdit={() => handleOpenEditDialog(item)}
             onRemove={() => handleOpenDeleteDialog(item)}
+            id={item.id}
           />
         )}
         ListEmptyComponent={() => <NoItems text='Não há listas cadastradas'/>}

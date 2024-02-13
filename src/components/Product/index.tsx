@@ -2,25 +2,28 @@ import { theme } from 'constants/theme'
 import { TouchableOpacity, View } from 'react-native'
 import { Text, Icon } from 'react-native-paper'
 import { styles } from './styles'
-import { router } from 'expo-router'
+import { ProductEntity } from 'database/entities'
 
-type CategoryProps = {
-  title: string
-  id: number
+type ProductProps = {
+  product: ProductEntity
   onRemove?: () => void
   onEdit?: () => void
-
 }
 
-export function Category({title, onRemove, onEdit, id }: CategoryProps) {
-  function handleGoToProducts() {
-    router.push(`/products/${id}`)
-  }
+export function Product({product, onEdit, onRemove}: ProductProps) {
+
+  const total = product.price * product.quantity
+
   return(
-    <View style={styles.categoryContainer}>
-      <TouchableOpacity style={styles.touchText} onPress={handleGoToProducts}>
-        <Text style={styles.text}>{title}</Text>
-      </TouchableOpacity>
+    
+    <View style={styles.productContainer}>
+      <View style={styles.touchText}>
+        <View style={styles.container}>
+          <Text style={styles.text}>{product.quantity}x</Text>
+          <Text numberOfLines={5} style={styles.text}>Arroz </Text>
+        </View>
+        <Text style={styles.text}>R${total}</Text>
+      </View>
 
       <View style={styles.icons}>
         <TouchableOpacity style={styles.touchIcons} onPress={onEdit}>
