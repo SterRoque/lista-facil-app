@@ -11,22 +11,61 @@ import { theme } from 'constants/theme'
 import { NoItems } from 'components/NoItems'
 import { ProductDialog } from 'components/ProductDialog'
 import { Product } from 'components/Product'
+import { ProductModel } from 'models/product-model'
+import { createProductService, getProductsServiceByCategoryId } from 'services/products-services'
+
+const productInitial = {
+  name: '',
+  quantity: null,
+  price: null,
+  categoryId: 0
+}
 
 export default function Products() {
 
   const [category, setCategory] = useState<CategoryEntity | null>(null)
   const { categoryId } = useLocalSearchParams()
   const [products, setProducts] = useState<ProductEntity[]>([])
+  const [product, setProduct] = useState<ProductModel>(productInitial)
+  const [isOpenAddProductDialog, setIsOpenAddProductDialog] = useState<boolean>(false)
 
   async function fetchCategory() {
     const categoryResponse = await findCategoryByIdService(Number(categoryId)) 
     setCategory(categoryResponse)
 
   }
+  async function fetchProducts() {
+    const response = await getProductsServiceByCategoryId(Number(categoryId))
+    setProducts(response)
+  }
+
+  function handleOpenAddProductDialog() {
+    setIsOpenAddProductDialog(true)
+  }
+
+  function handleCloseAddProductDialog() {
+    setIsOpenAddProductDialog(false)
+    setProduct(productInitial)
+  }
+
+  async function handleAddProduct() {
+    await createProductService({
+      ...product,
+      price: Number(product.price),
+      quantity: Number(product.quantity),
+      categoryId: Number(categoryId)
+    })
+    await fetchProducts()
+    handleCloseAddProductDialog()
+  }
+  console.log(products)
+  
   
   useEffect(() => {
     fetchCategory()
   }, [])
+
+  
 
   return (
 
@@ -39,7 +78,7 @@ export default function Products() {
         />
       </TouchableOpacity>
       <Text style={styles.categoryName}>{category?.name}</Text>
-      <TouchableOpacity style={styles.buttonAddProduct}>
+      <TouchableOpacity style={styles.buttonAddProduct} onPress={handleOpenAddProductDialog}>
         <Text style={styles.nameBtnAddProduct}>Adicionar produto</Text> 
         <AntDesign name='plus' size={24} color='white'/>
       </TouchableOpacity>
@@ -75,7 +114,15 @@ export default function Products() {
 
       </View>
 
-      <ProductDialog title='Adicionar item' isOpen={false}></ProductDialog>
+      <ProductDialog 
+        title='Adicionar item' 
+        isOpen={isOpenAddProductDialog}
+        onClose={handleCloseAddProductDialog}
+        product={product}
+        setProduct={setProduct}
+        onSubmit={handleAddProduct}
+      />
     </View>
+
   )
 }
