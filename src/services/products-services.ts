@@ -42,8 +42,14 @@ export async function createProductService({
 }
 
 
-export async function getProductsService(): Promise<ProductEntity[]> {
-  const products = await productRepository.find()
+export async function getProductsServiceByCategoryId(categoryId: number): Promise<ProductEntity[]> {
+  const products = await productRepository.find({
+    where: {
+      category: {
+        id: categoryId
+      }
+    }
+  })
 
   return products
 }
