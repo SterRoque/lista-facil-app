@@ -38,7 +38,7 @@ export default function Products() {
     const response = await getProductsServiceByCategoryId(Number(categoryId))
     setProducts(response)
   }
-
+  
   function handleOpenAddProductDialog() {
     setIsOpenAddProductDialog(true)
   }
@@ -86,23 +86,19 @@ export default function Products() {
      
 
       <View>
-        <View style={styles.charContainer}>
-          <View style={{flexDirection: 'row', gap: 20}}>
-            <Text style={styles.charText}>Qtd</Text>
-            <Text style={styles.charText}>Produto</Text>
+        {
+          products.length > 0 && 
+          <View style={styles.charContainer}>
+            <View style={{flexDirection: 'row', gap: 20}}>
+              <Text style={styles.charText}>Qtd</Text>
+              <Text style={styles.charText}>Produto</Text>
+            </View>
+            <Text style={styles.charText}>Preço</Text>
           </View>
-          <Text style={styles.charText}>Preço</Text>
-        </View>
+        }
         <FlatList 
 
-          data={[
-            {
-              name: 'coco',
-              price: 2.50,
-              quantity: 5,
-              id: 1
-            }
-          ]}
+          data={products}
           style={{width: '100%'}}
           contentContainerStyle={{gap: 10, alignItems: 'center'}}
           keyExtractor={(item) => item.id.toString()}
