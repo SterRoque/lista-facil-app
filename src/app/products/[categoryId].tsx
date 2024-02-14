@@ -58,14 +58,10 @@ export default function Products() {
     await fetchProducts()
     handleCloseAddProductDialog()
   }
-  console.log(products)
-  
-  
+
   useEffect(() => {
     fetchCategory()
   }, [])
-
-  
 
   return (
 

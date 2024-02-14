@@ -36,7 +36,7 @@ export async function createProductService({
   product.quantity = quantity!
   product.category = category!
 
-  await dataSource.manager.save(category)
+  await dataSource.manager.save(product)
 
   return product
 }
