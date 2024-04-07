@@ -56,9 +56,13 @@ export default function Home() {
    }
 
    async function handleDeleteCategory() {
+    try {
       await deleteCategoryByIdService(category.id!);
       await fetchCategories();
       handleCloseDeleteDialog();
+    } catch (error) {
+     console.log({error}) 
+    }
    }
 
    async function handleSubmitEditDialog() {

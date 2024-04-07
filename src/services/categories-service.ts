@@ -1,6 +1,10 @@
 import { dataSource } from 'database';
 import { CategoryEntity } from 'database/entities';
 import { categoryRepository } from 'repositories';
+import {
+   deleteProductByIdService,
+   getProductsServiceByCategoryId,
+} from './products-services';
 
 export async function createCategoryService(
    name: string,
@@ -39,6 +43,24 @@ export async function findCategoryByIdService(
 }
 
 export async function deleteCategoryByIdService(id: number): Promise<void> {
+   const categoryExists = await findCategoryByIdService(id);
+
+   if (!categoryExists) {
+      throw new Error('Category not found!');
+   }
+
+   const products = await getProductsServiceByCategoryId(id);
+
+   if (products.length > 0) {
+      await Promise.all(
+         products.map(async (product) => {
+            if (product.id) {
+               await deleteProductByIdService(product.id);
+            }
+         }),
+      );
+   }
+
    await categoryRepository.delete({
       id,
    });
