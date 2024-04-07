@@ -6,6 +6,7 @@ import { categoryRepository, productRepository } from 'repositories';
 export async function createProductService({
    name,
    price = 0,
+   quantity = 1,
    categoryId,
 }: ProductModel): Promise<ProductEntity> {
    const productExists = await productRepository.findOne({ where: { name } });
@@ -24,19 +25,32 @@ export async function createProductService({
       throw new Error('Category not found!');
    }
 
+   if (price! < 1) {
+      throw new Error('Price should be greater that 1');
+   }
+
    const product = new ProductEntity();
 
    product.name = name;
-   product.price = price;
+   product.price = price!;
+   product.quantity = quantity!;
    product.category = category!;
 
-   await dataSource.manager.save(category);
+   await dataSource.manager.save(product);
 
    return product;
 }
 
-export async function getProductsService(): Promise<ProductEntity[]> {
-   const products = await productRepository.find();
+export async function getProductsServiceByCategoryId(
+   categoryId: number,
+): Promise<ProductEntity[]> {
+   const products = await productRepository.find({
+      where: {
+         category: {
+            id: categoryId,
+         },
+      },
+   });
 
    return products;
 }

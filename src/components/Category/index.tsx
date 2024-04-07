@@ -2,17 +2,24 @@ import { theme } from 'constants/theme';
 import { TouchableOpacity, View } from 'react-native';
 import { Text, Icon } from 'react-native-paper';
 import { styles } from './styles';
+import { router } from 'expo-router';
 
 type CategoryProps = {
    title: string;
+   id: number;
    onRemove?: () => void;
    onEdit?: () => void;
 };
 
-export function Category({ title, onRemove, onEdit }: CategoryProps) {
+export function Category({ title, onRemove, onEdit, id }: CategoryProps) {
+   function handleGoToProducts() {
+      router.push(`/products/${id}`);
+   }
    return (
       <View style={styles.categoryContainer}>
-         <TouchableOpacity style={styles.touchText}>
+         <TouchableOpacity
+            style={styles.touchText}
+            onPress={handleGoToProducts}>
             <Text style={styles.text}>{title}</Text>
          </TouchableOpacity>
 

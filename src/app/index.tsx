@@ -31,16 +31,15 @@ export default function Home() {
       setCategories(response);
    }
 
-   async function handleAddCategory() {
-      await createCategoryService(inputText);
-      await fetchCategories();
-      console.log(categories);
-      setInputText('');
-   }
-
    function handleOpenEditDialog(item: CategoryModel) {
       setCategory(item);
       setIsOpenEditDialog(true);
+   }
+
+   async function handleAddCategory() {
+      await createCategoryService(inputText);
+      await fetchCategories();
+      setInputText('');
    }
 
    function handleCloseEditDialog() {
@@ -92,8 +91,6 @@ export default function Home() {
       );
    }
 
-   console.log('sdsd');
-
    return (
       <View style={styles.body}>
          <Logo />
@@ -111,6 +108,7 @@ export default function Home() {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
                <Category
+                  id={item.id}
                   title={item.name}
                   onEdit={() => handleOpenEditDialog(item)}
                   onRemove={() => handleOpenDeleteDialog(item)}
