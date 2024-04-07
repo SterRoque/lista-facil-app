@@ -16,6 +16,7 @@ import {
    createProductService,
    getProductsServiceByCategoryId,
 } from 'services/products-services';
+import { usePreloader } from 'hooks/usePreloader';
 
 const productInitial = {
    name: '',
@@ -32,15 +33,21 @@ export default function Products() {
    const [isOpenAddProductDialog, setIsOpenAddProductDialog] =
       useState<boolean>(false);
 
+   const { openPreloader, closePreloader } = usePreloader();
+
    async function fetchCategory() {
+      openPreloader();
       const categoryResponse = await findCategoryByIdService(
          Number(categoryId),
       );
       setCategory(categoryResponse);
    }
+
    async function fetchProducts() {
+      openPreloader();
       const response = await getProductsServiceByCategoryId(Number(categoryId));
       setProducts(response);
+      closePreloader();
    }
 
    function handleOpenAddProductDialog() {
@@ -53,6 +60,7 @@ export default function Products() {
    }
 
    async function handleAddProduct() {
+      openPreloader();
       await createProductService({
          ...product,
          price: Number(product.price),
@@ -61,6 +69,7 @@ export default function Products() {
       });
       await fetchProducts();
       handleCloseAddProductDialog();
+      closePreloader();
    }
 
    useEffect(() => {

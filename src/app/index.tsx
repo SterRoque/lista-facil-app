@@ -17,6 +17,7 @@ import { CategoryEntity } from 'database/entities';
 import { EditCategoryDialog } from 'components/EditCategoryDialog';
 import { CategoryModel } from 'models/category-model';
 import { DeleteDialog } from 'components/DeleteDialog';
+import { usePreloader } from 'hooks/usePreloader';
 
 export default function Home() {
    const [isConnectingToDB, setIsConnectingToDB] = useState<boolean>(false);
@@ -26,9 +27,13 @@ export default function Home() {
    const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
    const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false);
 
+   const { openPreloader, closePreloader } = usePreloader();
+
    async function fetchCategories() {
+      openPreloader();
       const response = await getCategoriesService();
       setCategories(response);
+      closePreloader();
    }
 
    function handleOpenEditDialog(item: CategoryModel) {
@@ -37,9 +42,11 @@ export default function Home() {
    }
 
    async function handleAddCategory() {
+      openPreloader();
       await createCategoryService(inputText);
       await fetchCategories();
       setInputText('');
+      closePreloader();
    }
 
    function handleCloseEditDialog() {
@@ -56,19 +63,19 @@ export default function Home() {
    }
 
    async function handleDeleteCategory() {
-    try {
+      openPreloader();
       await deleteCategoryByIdService(category.id!);
       await fetchCategories();
       handleCloseDeleteDialog();
-    } catch (error) {
-     console.log({error}) 
-    }
+      closePreloader();
    }
 
    async function handleSubmitEditDialog() {
+      openPreloader();
       await updateCategoryService(category.id!, category.name);
       await fetchCategories();
       handleCloseEditDialog();
+      closePreloader();
    }
 
    useEffect(() => {
