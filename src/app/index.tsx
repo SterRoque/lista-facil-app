@@ -6,7 +6,7 @@ import { NoItems } from '../components/NoItems';
 import { Category } from 'components/Category';
 import { useEffect, useState } from 'react';
 import { dataSource } from 'database';
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, Text } from 'react-native-paper';
 import {
    createCategoryService,
    deleteCategoryByIdService,
@@ -110,7 +110,6 @@ export default function Home() {
             value={inputText}
             onAdd={handleAddCategory}
          />
-
          <FlatList
             data={categories}
             style={{ width: '100%', marginTop: 45 }}

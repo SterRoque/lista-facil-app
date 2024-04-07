@@ -65,9 +65,11 @@ export async function updateProductService(
    id: number,
    name: string,
    price: number = 0,
+   quantity: number = 0,
 ): Promise<void> {
    await productRepository.update(id, {
       name,
       price,
+      quantity,
    });
 }
