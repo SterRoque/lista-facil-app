@@ -1,4 +1,4 @@
-import { dataSource } from 'database'
-import { ProductEntity } from 'database/entities'
+import { dataSource } from 'database';
+import { ProductEntity } from 'database/entities';
 
-export const productRepository = dataSource.getRepository(ProductEntity)
+export const productRepository = dataSource.getRepository(ProductEntity);

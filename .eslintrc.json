@@ -6,7 +6,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -22,11 +23,11 @@
     "jsx-quotes": ["error", "prefer-single"],
     "indent": [
       "error",
-      2
+      3
     ],
     "linebreak-style": [
       "error",
-      "unix"
+      "auto"
     ],
     "quotes": [
       "error",
@@ -34,7 +35,15 @@
     ],
     "semi": [
       "error",
-      "never"
-    ]
+      "always"
+    ],
+    "comma-dangle": ["error", "always"],
+    "arrow-parens": ["error", "always"],
+    "object-curly-spacing": ["error", "always"],
+    "jsx-single-quote": ["error", "always"],
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+    "multiline-ternary": ["error", "always-multiline"],
+    "no-trailing-spaces": "error"
+    
   }
 }
