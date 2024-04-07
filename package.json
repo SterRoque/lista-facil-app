@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "eslint-plugin-prettier": "^5.1.3",
     "expo": "~50.0.5",
     "expo-constants": "~15.4.5",
     "expo-linking": "~6.2.2",
@@ -32,6 +33,7 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.2.5",
     "react-native-svg-transformer": "^1.3.0",
     "typescript": "^5.1.3"
   },

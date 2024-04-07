@@ -1,4 +1,4 @@
-import { dataSource } from 'database'
-import { CategoryEntity } from 'database/entities'
+import { dataSource } from 'database';
+import { CategoryEntity } from 'database/entities';
 
-export const categoryRepository = dataSource.getRepository(CategoryEntity)
+export const categoryRepository = dataSource.getRepository(CategoryEntity);
