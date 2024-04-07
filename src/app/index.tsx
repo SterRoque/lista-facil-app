@@ -46,7 +46,6 @@ export default function Home() {
       await createCategoryService(inputText);
       await fetchCategories();
       setInputText('');
-      closePreloader();
    }
 
    function handleCloseEditDialog() {
@@ -63,19 +62,17 @@ export default function Home() {
    }
 
    async function handleDeleteCategory() {
+      handleCloseDeleteDialog();
       openPreloader();
       await deleteCategoryByIdService(category.id!);
       await fetchCategories();
-      handleCloseDeleteDialog();
-      closePreloader();
    }
 
    async function handleSubmitEditDialog() {
+      handleCloseEditDialog();
       openPreloader();
       await updateCategoryService(category.id!, category.name);
       await fetchCategories();
-      handleCloseEditDialog();
-      closePreloader();
    }
 
    useEffect(() => {

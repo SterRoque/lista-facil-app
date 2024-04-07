@@ -5,15 +5,11 @@ export function usePreloader() {
    const { isOpenPreloader, setIsOpenPreloader } = useContext(PreloaderContext);
 
    function openPreloader() {
-      if (!isOpenPreloader) {
-         setIsOpenPreloader(true);
-      }
+      setIsOpenPreloader(true);
    }
 
    function closePreloader() {
-      if (isOpenPreloader) {
-         setIsOpenPreloader(false);
-      }
+      setIsOpenPreloader(false);
    }
 
    return {

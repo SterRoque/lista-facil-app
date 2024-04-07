@@ -49,8 +49,6 @@ export default function Products() {
       0,
    );
 
-   console.log(PRODUCTS_TOTAL_PRICE);
-
    const { openPreloader, closePreloader } = usePreloader();
 
    async function fetchCategory() {
@@ -92,6 +90,7 @@ export default function Products() {
       const { id, name, price, quantity } = product;
 
       setIsOpenEditProductDialog(true);
+
       setProduct({
          id,
          name,
@@ -111,6 +110,7 @@ export default function Products() {
    }
 
    async function handleAddProduct() {
+      handleCloseAddProductDialog();
       openPreloader();
       await createProductService({
          ...product,
@@ -119,11 +119,11 @@ export default function Products() {
          categoryId: Number(categoryId),
       });
       await fetchProducts();
-      handleCloseAddProductDialog();
-      closePreloader();
    }
 
    async function handleEditProduct() {
+      handleCloseEditProductDialog();
+      openPreloader();
       await updateProductService(
          product.id!,
          product.name,
@@ -131,12 +131,12 @@ export default function Products() {
          product.quantity!,
       );
       await fetchProducts();
-      handleCloseEditProductDialog();
    }
    async function handleRemoveProduct() {
+      handleCloseDeleteProductDialog();
+      openPreloader();
       await deleteProductByIdService(product.id!);
       await fetchProducts();
-      handleCloseDeleteProductDialog();
    }
 
    useEffect(() => {

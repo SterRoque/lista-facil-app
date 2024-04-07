@@ -29,8 +29,8 @@ export function PreloaderContextProvider({
             isOpenPreloader,
             setIsOpenPreloader,
          }}>
-         {isOpenPreloader && <Preloader />}
          {children}
+         {isOpenPreloader && <Preloader />}
       </PreloaderContext.Provider>
    );
 }
