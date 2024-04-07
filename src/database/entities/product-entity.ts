@@ -25,6 +25,6 @@ export class ProductEntity extends BaseEntity {
    @CreateDateColumn()
    created_at: Date;
 
-   @ManyToOne(() => Category, (category) => category.products)
+   @ManyToOne(() => 'CategoryEntity', (category) => category.products)
    category: Category;
 }
