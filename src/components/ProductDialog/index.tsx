@@ -5,6 +5,12 @@ import { theme } from 'constants/theme';
 import { ProductModel } from 'models/product-model';
 import { Dispatch, SetStateAction } from 'react';
 
+export type ProductErrors = {
+   name?: boolean;
+   quantity?: boolean;
+   price?: boolean;
+};
+
 type ProductDialogProps = {
    title: string;
    isOpen: boolean;
@@ -12,20 +18,31 @@ type ProductDialogProps = {
    onSubmit?: () => void;
    setProduct: Dispatch<SetStateAction<ProductModel>>;
    product: ProductModel;
+   errors: ProductErrors;
+   setErrors: Dispatch<SetStateAction<ProductErrors>>;
 };
 export function ProductDialog({
    title,
    isOpen = false,
    product,
+   errors,
+   setErrors,
    setProduct,
    onClose,
    onSubmit,
 }: ProductDialogProps) {
-   function onChangeText(text: string, prop: string) {
+   function onChangeText(text: string, prop: 'name' | 'quantity' | 'price') {
       setProduct((prev) => ({
          ...prev,
          [prop]: text,
       }));
+
+      if (errors[prop]) {
+         setErrors((prevState) => ({
+            ...prevState,
+            [prop]: false,
+         }));
+      }
    }
 
    return (
@@ -37,10 +54,11 @@ export function ProductDialog({
                   Adicione itens na sua lista de compras
                </Text>
                <TextInput
-                  label='Nome'
+                  label={'Nome'}
                   style={{ marginTop: 11 }}
                   value={product?.name}
                   onChangeText={(text) => onChangeText(text, 'name')}
+                  error={errors?.name}
                />
                <View style={styles.inputContainer}>
                   <TextInput
@@ -48,12 +66,14 @@ export function ProductDialog({
                      style={styles.input}
                      value={product?.quantity?.toString()}
                      onChangeText={(text) => onChangeText(text, 'quantity')}
+                     error={errors?.quantity}
                   />
                   <TextInput
                      label='Preço'
                      style={styles.input}
                      value={product?.price?.toString()}
                      onChangeText={(text) => onChangeText(text, 'price')}
+                     error={errors?.price}
                   />
                </View>
             </Dialog.Content>

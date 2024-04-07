@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { theme } from 'constants/theme';
 import { NoItems } from 'components/NoItems';
-import { ProductDialog } from 'components/ProductDialog';
+import { ProductDialog, ProductErrors } from 'components/ProductDialog';
 import { Product } from 'components/Product';
 import { ProductModel } from 'models/product-model';
 import {
@@ -34,7 +34,10 @@ export default function Products() {
    const [category, setCategory] = useState<CategoryEntity | null>(null);
    const { categoryId } = useLocalSearchParams();
    const [products, setProducts] = useState<ProductEntity[]>([]);
+
    const [product, setProduct] = useState<ProductModel>(productInitial);
+   const [productErrors, setProductErrors] = useState<ProductErrors>({});
+
    const [isOpenAddProductDialog, setIsOpenAddProductDialog] =
       useState<boolean>(false);
    const [isOpenEditProductDialog, setIsOpenEditProductDialog] =
@@ -103,13 +106,45 @@ export default function Products() {
    function handleCloseAddProductDialog() {
       setIsOpenAddProductDialog(false);
       setProduct(productInitial);
+      setProductErrors({});
    }
    function handleCloseEditProductDialog() {
       setIsOpenEditProductDialog(false);
       setProduct(productInitial);
+      setProductErrors({});
+   }
+
+   function setInputError(prop: 'name' | 'quantity' | 'price') {
+      setProductErrors((prevState) => ({
+         ...prevState,
+         [prop]: true,
+      }));
+   }
+
+   function verifyInputErrors() {
+      if (!product.name || !product.quantity || !product.price) {
+         if (!product.name) {
+            setInputError('name');
+         }
+
+         if (!product.quantity || Number(product.quantity) === 0) {
+            setInputError('quantity');
+         }
+
+         if (!product.price) {
+            setInputError('price');
+         }
+         return true;
+      }
+
+      return false;
    }
 
    async function handleAddProduct() {
+      if (verifyInputErrors()) {
+         return;
+      }
+
       handleCloseAddProductDialog();
       openPreloader();
       await createProductService({
@@ -122,6 +157,10 @@ export default function Products() {
    }
 
    async function handleEditProduct() {
+      if (verifyInputErrors()) {
+         return;
+      }
+
       handleCloseEditProductDialog();
       openPreloader();
       await updateProductService(
@@ -211,6 +250,8 @@ export default function Products() {
             product={product}
             setProduct={setProduct}
             onSubmit={handleAddProduct}
+            errors={productErrors}
+            setErrors={setProductErrors}
          />
          <ProductDialog
             title='Editar item'
@@ -219,6 +260,8 @@ export default function Products() {
             setProduct={setProduct}
             onClose={handleCloseEditProductDialog}
             onSubmit={handleEditProduct}
+            errors={productErrors}
+            setErrors={setProductErrors}
          />
          <DeleteDialog
             isOpen={isOpenDeleteProductDialog}
