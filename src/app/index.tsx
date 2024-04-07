@@ -22,6 +22,7 @@ import { usePreloader } from 'hooks/usePreloader';
 export default function Home() {
    const [isConnectingToDB, setIsConnectingToDB] = useState<boolean>(false);
    const [inputText, setInputText] = useState<string>('');
+   const [hasInputTextError, setHasInputTextError] = useState<boolean>(false);
    const [categories, setCategories] = useState<CategoryEntity[]>([]);
    const [category, setCategory] = useState<CategoryModel>({ name: '' });
    const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
@@ -42,6 +43,11 @@ export default function Home() {
    }
 
    async function handleAddCategory() {
+      if (!inputText) {
+         setHasInputTextError(true);
+         return;
+      }
+
       openPreloader();
       await createCategoryService(inputText);
       await fetchCategories();
@@ -106,6 +112,8 @@ export default function Home() {
             onChangeText={(text) => setInputText(text)}
             value={inputText}
             onAdd={handleAddCategory}
+            hasError={hasInputTextError}
+            setHasError={setHasInputTextError}
          />
          <FlatList
             data={categories}
