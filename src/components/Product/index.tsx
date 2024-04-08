@@ -12,42 +12,52 @@ type ProductProps = {
 };
 
 export function Product({ product, onEdit, onRemove }: ProductProps) {
-   const total = product.price * product.quantity;
+   const total = numberToBRL(product.price * product.quantity);
 
    return (
       <View style={styles.productContainer}>
-         <View style={styles.touchText}>
-            <View style={styles.container}>
-               <Text style={styles.text}>{product.quantity}x</Text>
-               <Text
-                  numberOfLines={5}
-                  style={styles.text}>
-                  {product.name}
-               </Text>
+         <View
+            style={{
+               width: '100%',
+               flexDirection: 'row',
+               justifyContent: 'space-between',
+               alignItems: 'center',
+               paddingLeft: 9,
+               paddingRight: 16,
+            }}>
+            <View style={styles.touchText}>
+               <View style={styles.container}>
+                  <Text style={styles.text}>{product.quantity}x</Text>
+                  <Text
+                     numberOfLines={5}
+                     style={styles.text}>
+                     {product.name}
+                  </Text>
+               </View>
+               <Text style={styles.text}>{total}</Text>
             </View>
-            <Text style={styles.text}>{numberToBRL(total)}</Text>
-         </View>
 
-         <View style={styles.icons}>
-            <TouchableOpacity
-               style={styles.touchIcons}
-               onPress={onEdit}>
-               <Icon
-                  source='pencil-outline'
-                  size={25}
-                  color={theme.colors.primary}
-               />
-            </TouchableOpacity>
+            <View style={styles.icons}>
+               <TouchableOpacity
+                  style={styles.touchIcons}
+                  onPress={onEdit}>
+                  <Icon
+                     source='pencil-outline'
+                     size={25}
+                     color={theme.colors.primary}
+                  />
+               </TouchableOpacity>
 
-            <TouchableOpacity
-               style={styles.touchIcons}
-               onPress={onRemove}>
-               <Icon
-                  source='trash-can-outline'
-                  size={25}
-                  color={theme.colors.primary}
-               />
-            </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.touchIcons}
+                  onPress={onRemove}>
+                  <Icon
+                     source='trash-can-outline'
+                     size={25}
+                     color={theme.colors.primary}
+                  />
+               </TouchableOpacity>
+            </View>
          </View>
       </View>
    );

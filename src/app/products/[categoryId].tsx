@@ -1,7 +1,13 @@
 import { CategoryEntity, ProductEntity } from 'database/entities';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, FlatList, TouchableOpacity, View } from 'react-native';
+import {
+   Alert,
+   Dimensions,
+   FlatList,
+   TouchableOpacity,
+   View,
+} from 'react-native';
 import { Text } from 'react-native-paper';
 import { findCategoryByIdService } from 'services/categories-service';
 import { styles } from 'styles/products.styles';
@@ -255,12 +261,12 @@ export default function Products() {
             <Text style={styles.nameBtnAddProduct}>Adicionar produto</Text>
             <AntDesign
                name='plus'
-               size={24}
+               size={20}
                color='white'
             />
          </TouchableOpacity>
 
-         <View>
+         <View style={{ width: '100%' }}>
             {products.length > 0 && (
                <View style={styles.charContainer}>
                   <View style={{ flexDirection: 'row', gap: 20 }}>
@@ -270,25 +276,29 @@ export default function Products() {
                   <Text style={styles.charText}>Preço</Text>
                </View>
             )}
-
-            <FlatList
-               data={products}
-               style={{ width: '100%' }}
-               contentContainerStyle={{ gap: 10, alignItems: 'center' }}
-               keyExtractor={(item) => item.id.toString()}
-               showsHorizontalScrollIndicator={false}
-               renderItem={({ item }) => (
-                  <Product
-                     product={item}
-                     onEdit={() => handleOpenEditProductDialog(item)}
-                     onRemove={() => handleOpenDeleteProductDialog(item)}
-                  />
-               )}
-               ListEmptyComponent={() => (
-                  <NoItems text='Não há produtos cadastrados' />
-               )}
-            />
          </View>
+         <FlatList
+            data={products}
+            style={{
+               width: '100%',
+               maxHeight: Dimensions.get('screen').height * 0.57,
+               alignSelf: 'center',
+               paddingBottom: 30,
+            }}
+            contentContainerStyle={{ gap: 10, alignItems: 'center' }}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+               <Product
+                  product={item}
+                  onEdit={() => handleOpenEditProductDialog(item)}
+                  onRemove={() => handleOpenDeleteProductDialog(item)}
+               />
+            )}
+            ListEmptyComponent={() => (
+               <NoItems text='Não há produtos cadastrados' />
+            )}
+         />
          {products.length > 0 && (
             <Text style={styles.priceProductTotal}>
                Valor total:{' '}

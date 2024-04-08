@@ -6,19 +6,19 @@ export const styles = StyleSheet.create({
       flexDirection: 'row',
       backgroundColor: theme.colors.surfaceVariant,
       paddingVertical: 14,
-      paddingHorizontal: 16,
+      // paddingHorizontal: 16,
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%',
+      width: '90%',
       borderRadius: 8,
    },
    icons: {
       flexDirection: 'row',
-      gap: 10,
+      gap: 5,
    },
    text: {
       fontSize: 16,
-      maxWidth: '78%',
+      maxWidth: '80%',
    },
    touchIcons: {
       width: 30,
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingRight: 19,
+      paddingRight: 10,
    },
    container: {
       flexDirection: 'row',

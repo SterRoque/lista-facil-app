@@ -4,7 +4,7 @@ import { theme } from '../../constants/theme';
 export const styles = StyleSheet.create({
    container: {
       flexDirection: 'row',
-      width: '80%',
+      width: '90%',
       justifyContent: 'center',
       marginTop: 56,
    },
