@@ -9,7 +9,14 @@ export async function createProductService({
    quantity = 1,
    categoryId,
 }: ProductModel): Promise<ProductEntity> {
-   const productExists = await productRepository.findOne({ where: { name } });
+   const productExists = await productRepository.findOne({
+      where: {
+         name,
+         category: {
+            id: categoryId,
+         },
+      },
+   });
 
    if (productExists) {
       throw new Error('Product already exists!');

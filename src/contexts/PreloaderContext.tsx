@@ -1,6 +1,6 @@
 import {
    Dispatch,
-   ReactElement,
+   ReactNode,
    SetStateAction,
    createContext,
    useState,
@@ -13,7 +13,7 @@ type PreloaderContextProps = {
 };
 
 type PreloaderContextProviderProps = {
-   children: ReactElement;
+   children: ReactNode;
 };
 
 export const PreloaderContext = createContext({} as PreloaderContextProps);

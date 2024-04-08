@@ -1,7 +1,7 @@
 import { CategoryEntity, ProductEntity } from 'database/entities';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { findCategoryByIdService } from 'services/categories-service';
 import { styles } from 'styles/products.styles';
@@ -21,6 +21,8 @@ import {
 import { numberToBRL } from 'utils/number-to-brl';
 import { DeleteDialog } from 'components/DeleteDialog';
 import { usePreloader } from 'hooks/usePreloader';
+import { ErrorProps } from 'types/error';
+import { toast } from '@backpackapp-io/react-native-toast';
 
 const productInitial = {
    name: '',
@@ -145,15 +147,46 @@ export default function Products() {
          return;
       }
 
-      handleCloseAddProductDialog();
+      const productExists = products.find((item) => item.name === product.name);
+
+      if (productExists) {
+         Alert.alert(
+            'Produto já existente!',
+            'Este produto já está cadastrado nesta categoria!',
+         );
+         return;
+      }
+
+      setIsOpenAddProductDialog(false);
+
       openPreloader();
-      await createProductService({
-         ...product,
-         price: Number(product.price),
-         quantity: Number(product.quantity),
-         categoryId: Number(categoryId),
-      });
-      await fetchProducts();
+
+      try {
+         await createProductService({
+            ...product,
+            price: Number(product.price),
+            quantity: Number(product.quantity),
+            categoryId: Number(categoryId),
+         });
+
+         await fetchProducts();
+
+         handleCloseAddProductDialog();
+      } catch (err) {
+         const error = err as ErrorProps;
+         setIsOpenAddProductDialog(true);
+
+         if (error.message && error.message === 'Product already exists!') {
+            Alert.alert(
+               'Produto já existente!',
+               'Este produto já está cadastrado nesta categoria!',
+            );
+         } else {
+            alert('Houve um erro ao editar seu produto!');
+         }
+
+         closePreloader();
+      }
    }
 
    async function handleEditProduct() {
@@ -161,15 +194,32 @@ export default function Products() {
          return;
       }
 
-      handleCloseEditProductDialog();
+      const productExists = products.find((item) => item.name === product.name);
+
+      if (productExists) {
+         Alert.alert(
+            'Produto já existente!',
+            'Este produto já está cadastrado nesta categoria!',
+         );
+         return;
+      }
+
       openPreloader();
-      await updateProductService(
-         product.id!,
-         product.name,
-         product.price!,
-         product.quantity!,
-      );
-      await fetchProducts();
+      setIsOpenEditProductDialog(false);
+
+      try {
+         await updateProductService(
+            product.id!,
+            product.name,
+            product.price!,
+            product.quantity!,
+         );
+      } catch (err) {
+         alert('Houve um erro ao editar seu produto!');
+      } finally {
+         handleCloseEditProductDialog();
+         await fetchProducts();
+      }
    }
    async function handleRemoveProduct() {
       handleCloseDeleteProductDialog();
