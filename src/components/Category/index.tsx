@@ -17,32 +17,42 @@ export function Category({ title, onRemove, onEdit, id }: CategoryProps) {
    }
    return (
       <View style={styles.categoryContainer}>
-         <TouchableOpacity
-            style={styles.touchText}
-            onPress={handleGoToProducts}>
-            <Text style={styles.text}>{title}</Text>
-         </TouchableOpacity>
-
-         <View style={styles.icons}>
+         <View
+            style={{
+               width: '100%',
+               flexDirection: 'row',
+               justifyContent: 'space-between',
+               alignItems: 'center',
+               paddingHorizontal: 16,
+               paddingRight: 30,
+            }}>
             <TouchableOpacity
-               style={styles.touchIcons}
-               onPress={onEdit}>
-               <Icon
-                  source='pencil-outline'
-                  size={25}
-                  color={theme.colors.primary}
-               />
+               style={styles.touchText}
+               onPress={handleGoToProducts}>
+               <Text style={styles.text}>{title}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-               style={styles.touchIcons}
-               onPress={onRemove}>
-               <Icon
-                  source='trash-can-outline'
-                  size={25}
-                  color={theme.colors.primary}
-               />
-            </TouchableOpacity>
+            <View style={styles.icons}>
+               <TouchableOpacity
+                  style={styles.touchIcons}
+                  onPress={onEdit}>
+                  <Icon
+                     source='pencil-outline'
+                     size={25}
+                     color={theme.colors.primary}
+                  />
+               </TouchableOpacity>
+
+               <TouchableOpacity
+                  style={styles.touchIcons}
+                  onPress={onRemove}>
+                  <Icon
+                     source='trash-can-outline'
+                     size={25}
+                     color={theme.colors.primary}
+                  />
+               </TouchableOpacity>
+            </View>
          </View>
       </View>
    );

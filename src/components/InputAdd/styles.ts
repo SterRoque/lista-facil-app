@@ -4,7 +4,11 @@ import { theme } from '../../constants/theme';
 export const styles = StyleSheet.create({
    container: {
       flexDirection: 'row',
+<<<<<<< HEAD
       width: '100%',
+=======
+      width: '80%',
+>>>>>>> f28fe81 (fix: responsiveness)
       justifyContent: 'center',
       marginTop: 56,
    },

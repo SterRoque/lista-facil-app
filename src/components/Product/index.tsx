@@ -3,6 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Text, Icon } from 'react-native-paper';
 import { styles } from './styles';
 import { ProductEntity } from 'database/entities';
+import { numberToBRL } from 'utils/number-to-brl';
 
 type ProductProps = {
    product: ProductEntity;
@@ -24,7 +25,7 @@ export function Product({ product, onEdit, onRemove }: ProductProps) {
                   {product.name}
                </Text>
             </View>
-            <Text style={styles.text}>R${total}</Text>
+            <Text style={styles.text}>{numberToBRL(total)}</Text>
          </View>
 
          <View style={styles.icons}>

@@ -117,7 +117,10 @@ export default function Home() {
          />
          <FlatList
             data={categories}
-            style={{ width: '100%', marginTop: 45 }}
+            style={{
+               width: '100%',
+               marginTop: 45,
+            }}
             contentContainerStyle={{ gap: 10, alignItems: 'center' }}
             keyExtractor={(item) => item.id.toString()}
             showsHorizontalScrollIndicator={false}

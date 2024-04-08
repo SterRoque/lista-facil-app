@@ -235,13 +235,14 @@ export default function Products() {
                )}
             />
          </View>
-
-         <Text style={styles.priceProductTotal}>
-            Valor total:{' '}
-            <Text style={[styles.priceProductTotal, { color: 'red' }]}>
-               {numberToBRL(PRODUCTS_TOTAL_PRICE)}
+         {products.length > 0 && (
+            <Text style={styles.priceProductTotal}>
+               Valor total:{' '}
+               <Text style={[styles.priceProductTotal, { color: 'red' }]}>
+                  {numberToBRL(PRODUCTS_TOTAL_PRICE)}
+               </Text>
             </Text>
-         </Text>
+         )}
 
          <ProductDialog
             title='Adicionar item'

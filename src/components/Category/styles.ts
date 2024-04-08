@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
       flexDirection: 'row',
       backgroundColor: theme.colors.surfaceVariant,
       paddingVertical: 14,
-      paddingHorizontal: 16,
+      // paddingHorizontal: 16,
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%',
+      width: '80%',
       borderRadius: 8,
    },
    icons: {
