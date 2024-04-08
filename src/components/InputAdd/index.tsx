@@ -19,6 +19,7 @@ export function InputAdd({ onChangeText, value, onAdd }: InputAddProps) {
             label='Nome da lista'
             value={value}
             onChangeText={onChangeText}
+            keyboardAppearance='light'
          />
          <FAB
             color={theme.colors.onPrimary}

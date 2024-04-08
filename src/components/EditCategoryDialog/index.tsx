@@ -47,6 +47,7 @@ export function EditCategoryDialog({
                   value={value}
                   onChangeText={onChange}
                   error={hasError}
+                  keyboardAppearance='light'
                />
             </Dialog.Content>
             <Dialog.Actions>

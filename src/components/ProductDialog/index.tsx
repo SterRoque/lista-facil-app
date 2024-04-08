@@ -59,6 +59,7 @@ export function ProductDialog({
                   value={product?.name}
                   onChangeText={(text) => onChangeText(text, 'name')}
                   error={errors?.name}
+                  keyboardAppearance='light'
                />
                <View style={styles.inputContainer}>
                   <TextInput
@@ -67,6 +68,8 @@ export function ProductDialog({
                      value={product?.quantity?.toString()}
                      onChangeText={(text) => onChangeText(text, 'quantity')}
                      error={errors?.quantity}
+                     keyboardType='numeric'
+                     keyboardAppearance='light'
                   />
                   <TextInput
                      label='Preço'
@@ -74,6 +77,8 @@ export function ProductDialog({
                      value={product?.price?.toString()}
                      onChangeText={(text) => onChangeText(text, 'price')}
                      error={errors?.price}
+                     keyboardType='numeric'
+                     keyboardAppearance='light'
                   />
                </View>
             </Dialog.Content>
