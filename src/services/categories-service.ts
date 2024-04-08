@@ -70,6 +70,16 @@ export async function updateCategoryService(
    id: number,
    name: string,
 ): Promise<void> {
+   const categoryExists = await categoryRepository.findOne({
+      where: {
+         name,
+      },
+   });
+
+   if (categoryExists) {
+      throw new Error('Category already exists!');
+   }
+
    await categoryRepository.update(id, {
       name,
    });

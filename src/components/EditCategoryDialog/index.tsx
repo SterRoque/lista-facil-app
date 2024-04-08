@@ -1,4 +1,5 @@
 import { theme } from 'constants/theme';
+import { Dispatch, SetStateAction } from 'react';
 import { Button, Dialog, Portal, TextInput } from 'react-native-paper';
 
 type EditDialogProps = {
@@ -7,6 +8,8 @@ type EditDialogProps = {
    onClose: () => void;
    onSubmit: () => void;
    onChangeText: (text: string) => void;
+   hasError: boolean;
+   setHasError: Dispatch<SetStateAction<boolean>>;
 };
 
 export function EditCategoryDialog({
@@ -15,7 +18,17 @@ export function EditCategoryDialog({
    onClose,
    onSubmit,
    onChangeText,
+   hasError = false,
+   setHasError,
 }: EditDialogProps) {
+   function onChange(text: string) {
+      onChangeText(text);
+
+      if (hasError) {
+         setHasError(false);
+      }
+   }
+
    return (
       <Portal>
          <Dialog
@@ -32,7 +45,8 @@ export function EditCategoryDialog({
                   }}
                   outlineColor={theme.colors.primary}
                   value={value}
-                  onChangeText={onChangeText}
+                  onChangeText={onChange}
+                  error={hasError}
                />
             </Dialog.Content>
             <Dialog.Actions>

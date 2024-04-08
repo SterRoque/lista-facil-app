@@ -22,7 +22,6 @@ import { numberToBRL } from 'utils/number-to-brl';
 import { DeleteDialog } from 'components/DeleteDialog';
 import { usePreloader } from 'hooks/usePreloader';
 import { ErrorProps } from 'types/error';
-import { toast } from '@backpackapp-io/react-native-toast';
 
 const productInitial = {
    name: '',
@@ -46,6 +45,10 @@ export default function Products() {
       useState<boolean>(false);
    const [isOpenDeleteProductDialog, setIsOpenDeleteProductDialog] =
       useState<boolean>(false);
+
+   const productExists = products.find(
+      (item) => item.name.toUpperCase() === product.name.toUpperCase(),
+   );
 
    const PRODUCTS_TOTAL_PRICE = products.reduce(
       (accumulator: number, product: ProductEntity) => {
@@ -147,12 +150,10 @@ export default function Products() {
          return;
       }
 
-      const productExists = products.find((item) => item.name === product.name);
-
       if (productExists) {
          Alert.alert(
             'Produto já existente!',
-            'Este produto já está cadastrado nesta categoria!',
+            'Este produto já está cadastrado nesta categoria.',
          );
          return;
       }
@@ -179,7 +180,7 @@ export default function Products() {
          if (error.message && error.message === 'Product already exists!') {
             Alert.alert(
                'Produto já existente!',
-               'Este produto já está cadastrado nesta categoria!',
+               'Este produto já está cadastrado nesta categoria.',
             );
          } else {
             alert('Houve um erro ao editar seu produto!');
@@ -194,12 +195,10 @@ export default function Products() {
          return;
       }
 
-      const productExists = products.find((item) => item.name === product.name);
-
       if (productExists) {
          Alert.alert(
             'Produto já existente!',
-            'Este produto já está cadastrado nesta categoria!',
+            'Este produto já está cadastrado nesta categoria.',
          );
          return;
       }
