@@ -281,9 +281,7 @@ export default function Products() {
             data={products}
             style={{
                width: '100%',
-               maxHeight: Dimensions.get('screen').height * 0.57,
                alignSelf: 'center',
-               paddingBottom: 30,
             }}
             contentContainerStyle={{ gap: 10, alignItems: 'center' }}
             keyExtractor={(item) => item.id.toString()}

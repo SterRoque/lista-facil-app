@@ -1,4 +1,4 @@
-import { Alert, FlatList, View } from 'react-native';
+import { Alert, Dimensions, FlatList, View } from 'react-native';
 import Logo from '../assets/icons/logo.svg';
 import { styles } from '../styles/home.styles';
 import { InputAdd } from '../components/InputAdd';
@@ -180,7 +180,7 @@ export default function Home() {
             }}
             contentContainerStyle={{ gap: 10, alignItems: 'center' }}
             keyExtractor={(item) => item.id.toString()}
-            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
                <Category
                   id={item.id}

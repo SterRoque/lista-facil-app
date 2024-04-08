@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
    containerProducts: {
-      paddingTop: 80,
+      paddingTop: 45,
       alignItems: 'center',
       flex: 1,
    },
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       position: 'absolute',
-      top: 65,
+      top: 30,
       left: 0,
       height: 60,
       width: 60,
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
    buttonAddProduct: {
       paddingHorizontal: 17,
       height: 40,
-      marginTop: 65,
+      marginTop: 20,
       borderRadius: 8,
       gap: 9,
       backgroundColor: theme.colors.primary,
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
    charContainer: {
       width: '65.5%',
       marginLeft: 22,
-      marginTop: 38,
+      marginTop: 25,
       marginBottom: 10,
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -55,9 +55,13 @@ export const styles = StyleSheet.create({
       color: theme.colors.primary,
       fontSize: 16,
       fontWeight: 'bold',
-      position: 'absolute',
-      right: 34,
-      bottom: 10,
-      zIndex: 1,
+      marginTop: 10,
+      marginBottom: 10,
+      textAlign: 'right',
+      width: '90%',
+      // position: 'absolute',
+      // right: 34,
+      // bottom: 10,
+      // zIndex: 1,
    },
 });
