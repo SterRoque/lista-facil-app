@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.stermiss2.listadecompras"
+      "package": "com.stermiss2.listafacil"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,7 +36,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "50c46034-c7c1-4f80-a488-cb957b95f2ad"
+        "projectId": "593f6f6c-3160-4b6a-8783-9185267ee8e8"
       }
     }
   }
