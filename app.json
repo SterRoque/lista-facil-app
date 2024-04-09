@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "lista-de-compras",
-    "slug": "lista-de-compras",
-    "scheme": "lista-de-compras",
+    "name": "Lista Fácil",
+    "slug": "lista-facil",
+    "scheme": "lista-facil",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,15 +20,24 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.stermiss2.listadecompras"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "50c46034-c7c1-4f80-a488-cb957b95f2ad"
+      }
+    }
   }
 }

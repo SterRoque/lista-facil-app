@@ -19,6 +19,7 @@ import { CategoryModel } from 'models/category-model';
 import { DeleteDialog } from 'components/DeleteDialog';
 import { usePreloader } from 'hooks/usePreloader';
 import { ErrorProps } from 'types/error';
+import { Preloader } from 'components/Preloader';
 
 export default function Home() {
    const [isConnectingToDB, setIsConnectingToDB] = useState<boolean>(false);
@@ -157,11 +158,7 @@ export default function Home() {
    }, []);
 
    if (isConnectingToDB) {
-      return (
-         <View style={styles.body}>
-            <ActivityIndicator />
-         </View>
-      );
+      return <Preloader />;
    }
 
    return (
