@@ -32,8 +32,8 @@ export async function createProductService({
       throw new Error('Category not found!');
    }
 
-   if (price! < 1) {
-      throw new Error('Price should be greater that 1');
+   if (price! <= 0  || quantity! <= 0) {
+      throw new Error('Price or quantity should be greater that 0');
    }
 
    const product = new ProductEntity();

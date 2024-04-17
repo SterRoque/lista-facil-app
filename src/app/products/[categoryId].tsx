@@ -194,7 +194,7 @@ export default function Products() {
                'Este produto já está cadastrado nesta categoria.',
             );
          } else {
-            alert('Houve um erro ao editar seu produto!');
+            alert('Houve um erro ao criar seu produto!');
          }
 
          closePreloader();
