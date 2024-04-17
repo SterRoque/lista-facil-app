@@ -53,7 +53,7 @@ export default function Products() {
       useState<boolean>(false);
 
    const productExists = products.find(
-      (item) => item.name.toUpperCase() === product.name.toUpperCase(),
+      (item) => item.name.toUpperCase() === product.name.toUpperCase() && item.id !== product.id && item.id
    );
 
    const PRODUCTS_TOTAL_PRICE = products.reduce(

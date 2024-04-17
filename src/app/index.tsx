@@ -44,6 +44,10 @@ export default function Home() {
    }
 
    function handleOpenEditDialog(item: CategoryModel) {
+      if (hasInputTextError) {
+         setHasInputTextError(false);
+      }
+
       setCategory(item);
       setIsOpenEditDialog(true);
    }
@@ -108,16 +112,9 @@ export default function Home() {
    }
 
    async function handleSubmitEditDialog() {
+    
       if (!category.name) {
          setHasInputTextError(true);
-         return;
-      }
-
-      if (categoryExists) {
-         Alert.alert(
-            'Categoria já existente!',
-            'Esta categoria está cadastrada!',
-         );
          return;
       }
 
@@ -130,14 +127,10 @@ export default function Home() {
       } catch (err) {
          const error = err as ErrorProps;
 
-         if (error.message === 'Category already exists!') {
-            Alert.alert(
-               'Categoria já existente!',
-               'Esta categoria está cadastrada!',
-            );
-         } else {
-            alert('Houve um erro ao editar sua categoria!');
-         }
+         if (error.message !== 'Category already exists!') {
+            alert('Houve um erro ao editar sua categoria!');            
+         } 
+         closePreloader()
       }
    }
 

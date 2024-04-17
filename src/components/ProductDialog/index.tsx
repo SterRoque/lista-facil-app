@@ -47,7 +47,7 @@ export function ProductDialog({
 
    return (
       <Portal>
-         <Dialog visible={isOpen}>
+         <Dialog visible={isOpen} onDismiss={onClose}>
             <Dialog.Title>{title}</Dialog.Title>
             <Dialog.Content>
                <Text variant='bodyLarge'>

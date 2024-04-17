@@ -11,7 +11,7 @@ export async function createProductService({
 }: ProductModel): Promise<ProductEntity> {
    const productExists = await productRepository.findOne({
       where: {
-         name,
+         name: name.trim(),
          category: {
             id: categoryId,
          },
@@ -38,7 +38,7 @@ export async function createProductService({
 
    const product = new ProductEntity();
 
-   product.name = name;
+   product.name = name.trim();
    product.price = price!;
    product.quantity = quantity!;
    product.category = category!;
@@ -75,7 +75,7 @@ export async function updateProductService(
    quantity: number = 0,
 ): Promise<void> {
    await productRepository.update(id, {
-      name,
+      name: name.trim(),
       price,
       quantity,
    });
