@@ -28,6 +28,7 @@ import { numberToBRL } from 'utils/number-to-brl';
 import { DeleteDialog } from 'components/DeleteDialog';
 import { usePreloader } from 'hooks/usePreloader';
 import { ErrorProps } from 'types/error';
+import { InputSearch } from 'components/InputSearch';
 
 const productInitial = {
    name: '',
@@ -44,6 +45,7 @@ export default function Products() {
 
    const [product, setProduct] = useState<ProductModel>(productInitial);
    const [productErrors, setProductErrors] = useState<ProductErrors>({});
+   const [textInputSearch, setTextInputSearch] = useState<string>('');
 
    const [isOpenAddProductDialog, setIsOpenAddProductDialog] =
       useState<boolean>(false);
@@ -53,8 +55,17 @@ export default function Products() {
       useState<boolean>(false);
 
    const productExists = products.find(
-      (item) => item.name.toUpperCase() === product.name.toUpperCase() && item.id !== product.id && item.id
+      (item) =>
+         item.name.toUpperCase() === product.name.toUpperCase() &&
+         item.id !== product.id &&
+         item.id,
    );
+
+   const productSearch = textInputSearch
+      ? products.filter((product) =>
+           product.name.toLowerCase().startsWith(textInputSearch.toLowerCase()),
+        )
+      : products;
 
    const PRODUCTS_TOTAL_PRICE = products.reduce(
       (accumulator: number, product: ProductEntity) => {
@@ -255,16 +266,23 @@ export default function Products() {
             />
          </TouchableOpacity>
          <Text style={styles.categoryName}>{category?.name}</Text>
+
          <TouchableOpacity
             style={styles.buttonAddProduct}
             onPress={handleOpenAddProductDialog}>
-            <Text style={styles.nameBtnAddProduct}>Adicionar produto</Text>
+            <Text style={styles.nameBtnAddProduct}>Adicionar produto </Text>
             <AntDesign
                name='plus'
                size={20}
                color='white'
             />
          </TouchableOpacity>
+         {products.length > 0 && (
+            <InputSearch
+               onChangeText={(text) => setTextInputSearch(text)}
+               value={textInputSearch}
+            />
+         )}
 
          <View style={{ width: '100%' }}>
             {products.length > 0 && (
@@ -278,7 +296,7 @@ export default function Products() {
             )}
          </View>
          <FlatList
-            data={products}
+            data={productSearch}
             style={{
                width: '100%',
                alignSelf: 'center',

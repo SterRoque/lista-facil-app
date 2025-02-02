@@ -23,8 +23,8 @@ export const styles = StyleSheet.create({
    },
    buttonAddProduct: {
       paddingHorizontal: 17,
-      height: 40,
-      marginTop: 20,
+      height: 50,
+      marginTop: 30,
       borderRadius: 8,
       gap: 9,
       backgroundColor: theme.colors.primary,
