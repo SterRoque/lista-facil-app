@@ -33,7 +33,6 @@ export function MoneyMaskInput({
    return (
       <TextInput
          label={label}
-         placeholder='Digite um valor'
          value={value}
          error={error}
          onChangeText={handleChangeText}
