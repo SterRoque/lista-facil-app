@@ -32,7 +32,7 @@ export async function createProductService({
       throw new Error('Category not found!');
    }
 
-   if (price! <= 0  || quantity! <= 0) {
+   if (price! < 0 || quantity! <= 0) {
       throw new Error('Price or quantity should be greater that 0');
    }
 
@@ -74,8 +74,7 @@ export async function updateProductService(
    price: number = 0,
    quantity: number = 0,
 ): Promise<void> {
-
-   if (price! <= 0  || quantity! <= 0) {
+   if (price! < 0 || quantity! <= 0) {
       throw new Error('Price or quantity should be greater that 0');
    }
 
