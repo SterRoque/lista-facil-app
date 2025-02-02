@@ -3,7 +3,9 @@ import { styles } from './styles';
 import { View } from 'react-native';
 import { theme } from 'constants/theme';
 import { ProductModel } from 'models/product-model';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { MoneyMaskInput } from 'components/MoneyMaskInput';
+import { numberToBRL } from 'utils/number-to-brl';
 
 export type ProductErrors = {
    name?: boolean;
@@ -31,11 +33,26 @@ export function ProductDialog({
    onClose,
    onSubmit,
 }: ProductDialogProps) {
+   const [productPrice, setProductPrice] = useState<string>('');
+
    function onChangeText(text: string, prop: 'name' | 'quantity' | 'price') {
       setProduct((prev) => ({
          ...prev,
          [prop]: text,
       }));
+
+      if (prop == 'price') {
+         const priceFormat = Number(
+            text.replace('R$ ', '').replace('.', '').replace(',', '.'),
+         );
+
+         setProductPrice(text);
+
+         setProduct((prev) => ({
+            ...prev,
+            price: priceFormat,
+         }));
+      }
 
       if (errors[prop]) {
          setErrors((prevState) => ({
@@ -45,9 +62,19 @@ export function ProductDialog({
       }
    }
 
+   useEffect(() => {
+      if (isOpen && product.price) {
+         setProductPrice(numberToBRL(product.price));
+      } else if (!isOpen) {
+         setProductPrice('');
+      }
+   }, [isOpen]);
+
    return (
       <Portal>
-         <Dialog visible={isOpen} onDismiss={onClose}>
+         <Dialog
+            visible={isOpen}
+            onDismiss={onClose}>
             <Dialog.Title>{title}</Dialog.Title>
             <Dialog.Content>
                <Text variant='bodyLarge'>
@@ -71,7 +98,7 @@ export function ProductDialog({
                      keyboardType='numeric'
                      keyboardAppearance='light'
                   />
-                  <TextInput
+                  {/* <TextInput
                      label='Preço'
                      style={styles.input}
                      value={product?.price?.toString()}
@@ -79,6 +106,16 @@ export function ProductDialog({
                      error={errors?.price}
                      keyboardType='numeric'
                      keyboardAppearance='light'
+                  /> */}
+
+                  <MoneyMaskInput
+                     label='Preço'
+                     value={productPrice}
+                     onChangeText={(text) => {
+                        onChangeText(text, 'price');
+                        console.log(text);
+                     }}
+                     error={errors?.price}
                   />
                </View>
             </Dialog.Content>
