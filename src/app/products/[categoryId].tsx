@@ -147,7 +147,6 @@ export default function Products() {
       if (
          !product.name ||
          !product.quantity ||
-         !product.price ||
          Number(product.quantity) === 0
       ) {
          if (!product.name) {
